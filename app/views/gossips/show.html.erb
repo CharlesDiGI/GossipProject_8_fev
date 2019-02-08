@@ -1,0 +1,36 @@
+<div class="jumbotron">
+  <h4 class="display-4">Gossip n°<%= @gossips.id%></h4>
+    <p class="lead"><strong>Author : </strong></br><%= link_to "#{@gossips.user.first_name} #{@gossips.user.last_name}", author_path(@gossips.user.id) %></p>
+    <p class="lead"><strong>Title : </strong></br><%= @gossips.title.capitalize %></p>
+    <p class="lead"><strong>Content : </strong></br><%= @gossips.content %></p>
+    <p class="lead"><strong>City : </strong></br><%= link_to "#{@gossips.user.city.name}", city_path(@gossips.user.city.id) %></p> 
+    <p class="lead"><strong>Creation date : </strong></br><%= @gossips.created_at.strftime("%d-%m-%Y") %></p>
+    <p class="card-text"><small class="text-muted">Likes: <%= @gossips.likes.count %></small></p>
+  <div class='form-group'>
+    
+    <% if @gossips.user.id == current_user.id %>
+      <%= button_to "Modifier", edit_gossip_path(@gossips.id), class: "btn btn-primary", method: "get"   %></br>
+      <%= button_to "Supprimer le gossip", gossip_path(@gossips.id), method: "delete", class: "btn btn-danger", data: { confirm: "Vous-êtes vraiment sur ?"} %></br>
+    <% end %>
+    <%= button_to "Commenter le gossip", new_gossip_comment_path(@gossips), class: "btn btn-info", method: "get"   %></br></br>
+      <% pre_like = @gossips.likes.find { |like| like.user_id == current_user.id} %>
+      <% if pre_like %>
+        <%= button_to 'Unlike', gossip_like_path(@gossips, pre_like), class: "btn btn-primary", method: "delete" %>
+      <% else %>
+        <%= button_to "Like", gossip_likes_path(@gossips), type: "button", class: "btn btn-primary", method: "post"  %>
+      <% end %>
+  </div>
+</div>
+
+<div class="jumbotron">
+<h4 class="display-4">Les comments</h4></br>
+  <ul class="list-group">
+      <% @gossips.comments.each do |comment| %>
+        <div class="card border-secondary bg-light mb-5 p-2">
+            <p class="lead"><strong>Content : </strong></br><%= comment.content %>
+            <p class="lead"><strong>Author : </strong></br><%= comment.user.first_name %> <%= comment.user.last_name %>
+            <%= button_to "Modifier le comment", edit_gossip_comment_path(@gossips.id,comment.id), class: "btn btn-primary", method: "get"   %></br></br>
+        </div>
+      <% end %>
+  </ul>
+</div>

@@ -1,0 +1,47 @@
+<% if flash[:notice] %>
+  <div class="alert alert-dismissible alert-<%= flash[:type] %>">
+    <div class="notice"><strong><%= flash[:notice] %></strong></div>
+    <div>Thanks</div>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+<% end %>
+
+<div class="jumbotron">
+  <% unless session[:user_id] %>
+    <h1 class="display-4">Hello everyone !</h1>
+  <% else %>
+    <h1 class="display-4">Hello <%= current_user.first_name %></h1>
+  <% end %>
+    <p class="lead">Bienvenue sur <span class="text-primary">The Gossip Project</p>
+    <hr class="my-4">
+    <p>Tu vas pouvoir balancer sur tout le monde ici !</p>
+</div>
+
+<p><%= link_to "CREATE NEW GOSSIP", new_gossip_path , class: "nav-link btn btn-primary" %></P>
+
+<p>Voila la liste des gossips déjà publiés :</p>
+
+
+
+<div class="row justify-content-around">
+  <% @gossips.each do |gossip| %>
+    <div class="card border-primary bg-light mb-3 w-25 mx-5">
+    <div class="card-body">
+               <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+      <p class="card-text"><small class="text-muted">Likes: <%= gossip.likes.count %></small></p>
+      <h4 class="card-title"><%= (gossip.title).capitalize %></h4>
+      <h5 class="card-subtitle text-muted"><%= gossip.user.first_name %> <%= gossip.user.last_name %></h5></br>
+      <%= link_to "Voir le gossip", gossip_path(gossip.id), type: "button", class: "btn btn-secondary" %>
+      <%= link_to "Voir l'auteur", author_path(gossip.user.id), type: "button", class: "btn btn-secondary" %></br></br>
+            <% if session[:user_id] %>
+              <% pre_like = gossip.likes.find { |like| like.user_id == current_user.id} %>
+              <% if pre_like %>
+                <%= button_to 'Unlike', gossip_like_path(gossip.id, pre_like), class: "btn btn-primary", method: "delete" %>
+              <% else %>
+                <%= button_to "Like" , gossip_likes_path(gossip.id), type: "button", class: "btn btn-primary", method: "post"  %>
+              <% end %>
+              <% end %>
+    </div>
+    </div>
+  <% end %>
+</div>

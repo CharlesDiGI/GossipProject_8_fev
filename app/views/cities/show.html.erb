@@ -1,0 +1,26 @@
+<div class="jumbotron">
+  <h4 class="display-4"><%= @cities.name%></h4>
+  <p class="lead"><strong>City : </strong></br><%= @cities.name %></p>
+</div>
+
+
+<div class="jumbotron">
+<h4 class="display-4">Les gossips de la ville</h4></br>
+  <ul class="list-group">
+      <% @cities.user.each do |user| %>
+        <% user.gossips.each do |gossip| %>
+<div class="card border-secondary bg-light mb-5 p-2">
+            <p class="lead"><strong>Title : </strong></br><%= gossip[:title] %></br>
+            <p class="lead"><strong>Content : </strong></br><%= gossip[:content] %>
+            <p class="card-text"><small class="text-muted">Likes: <%= gossip.likes.count %></small></p>
+            <% pre_like = gossip.likes.find { |like| like.user_id == current_user.id} %>
+              <% if pre_like %>
+                <%= button_to 'Unlike', gossip_like_path(gossip.id, pre_like), class: "btn btn-primary", method: "delete" %>
+              <% else %>
+                <%= button_to "Like", gossip_likes_path(gossip.id), type: "button", class: "btn btn-primary", method: "post"  %>
+              <% end %>
+</div>
+        <% end %>
+      <% end %>
+  </ul>
+</div>

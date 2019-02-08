@@ -1,0 +1,9 @@
+<div class="jumbotron">
+  <h4 class="display-4">Author details for <%= @user.first_name %> <%= @user.last_name %></h4></br>
+  <p class="lead"><strong>First name: </strong></br><%= @user.first_name %></p>
+  <p class="lead"><strong>Last name: </strong></br><%= @user.last_name %></p>
+  <p class="lead"><strong>City: </strong></br><%= link_to "#{@user.city.name}", city_path(@user.city.id) %></p>
+  <p class="lead"><strong>Age: </strong></br><%= @user.age %></p>
+  <p class="lead"><strong>Description: </strong></br><%= @user.description %></p>
+  <p class="lead"><strong>Email: </strong></br><%= @user.email %></p>
+</div>

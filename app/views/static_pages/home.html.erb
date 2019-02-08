@@ -1,0 +1,28 @@
+<p><%= link_to "CREATE NEW GOSSIP", new_gossip_path , class: "nav-link" %></P>
+
+<% if flash[:notice] %>
+  <div class="alert alert-dismissible alert-success">
+    <div class="notice"><strong><%= flash[:notice] %></strong></div>
+    <div>Thanks</div>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+<% end %>
+
+<h3>Bienvenue sur <span class="text-primary">The Gossip Project</span> !</h3>
+<p>Voila la liste des gossips déjà publiés :</p>
+
+
+
+<div class="row justify-content-around">
+  <% @gossips.each do |gossip| %>
+    <div class="card border-secondary bg-light mb-3 w-25 mx-5">
+    <div class="card-body">
+      <h4 class="card-title"><%= (gossip.title).capitalize %></h4>
+      <h5 class="card-subtitle mb-2 text-muted"><%= gossip.user.first_name %> <%= gossip.user.last_name %></h5></br>
+      <%= link_to "Voir le gossip", gossip_path(gossip.id), type: "button", class: "btn btn-outline-primary" %></br></br>
+      <%= link_to "Voir la page de l'auteur", author_path(gossip.user.id), type: "button", class: "btn btn-outline-secondary" %>
+    </div>
+    </div>
+
+  <% end %>
+</div>
