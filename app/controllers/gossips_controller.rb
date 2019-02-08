@@ -23,7 +23,10 @@ class GossipsController < ApplicationController
    end
 
    def index
+    # cookies.signed[:username] = { value: "John", expires: 1.month.from.now }
+    # cookies.delete(:username)
     @gossips = Gossip.all
+
   end
 
   def edit
