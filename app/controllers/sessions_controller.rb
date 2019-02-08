@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       # params[:remember_me] == '1' ? remember(user) : forget(user)
-      params[session: : remember_me] == '1' ? remember(user) : forget(user)
+      params[session: :remember_me] == '1' ? remember(user) : forget(user)
       # remember user
       flash[:notice] = "You are logged in"
       flash[:type] = "info"
