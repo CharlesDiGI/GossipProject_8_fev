@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'conversations/new'
+  get 'conversations/create'
+  get 'conversations/index'
+  get 'conversations/show'
+  get 'conversations/update'
   get 'welcome/:user_entry', to: 'welcome#show_welcome', as: 'welcome'
   get 'team', to: 'static_pages#team'
   get 'contact', to: 'static_pages#contact'

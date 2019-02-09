@@ -25,6 +25,12 @@ class User < ApplicationRecord
     end
   end
 
+  # has_many :sent_messages, foreign_key: 'sender_id', class_name: "PrivateMessage"
+  # has_many :received_messages, foreign_key: 'recipient_id', class_name: "MultiPm"
+  # has_many :multi_pms
+  # has_many :private_messages, through: :multi_pms
+  # has_many :comments
+
   # Remembers a user in the database for use in persistent sessions.
   def remember
     self.remember_token = User.new_token
@@ -41,10 +47,4 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
-
-  # has_many :sent_messages, foreign_key: 'sender_id', class_name: "PrivateMessage"
-  # has_many :received_messages, foreign_key: 'recipient_id', class_name: "MultiPm"
-  # has_many :multi_pms
-  # has_many :private_messages, through: :multi_pms
-  # has_many :comments
 end
