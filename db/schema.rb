@@ -54,20 +54,21 @@ ActiveRecord::Schema.define(version: 2019_02_08_155609) do
   end
 
   create_table "multi_pms", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "private_message_id"
+    t.integer "sender_id"
+    t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["private_message_id"], name: "index_multi_pms_on_private_message_id"
-    t.index ["user_id"], name: "index_multi_pms_on_user_id"
   end
 
   create_table "private_messages", force: :cascade do |t|
-    t.text "content"
-    t.bigint "sender_id"
+    t.text "body"
+    t.bigint "conversation_id"
+    t.bigint "user_id"
+    t.boolean "read", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["sender_id"], name: "index_private_messages_on_sender_id"
+    t.index ["conversation_id"], name: "index_private_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_private_messages_on_user_id"
   end
 
   create_table "tag_by_gossips", force: :cascade do |t|
@@ -101,6 +102,4 @@ ActiveRecord::Schema.define(version: 2019_02_08_155609) do
 
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "users"
-  add_foreign_key "multi_pms", "private_messages"
-  add_foreign_key "multi_pms", "users"
 end
